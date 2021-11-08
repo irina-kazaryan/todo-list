@@ -1,0 +1,75 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-2">
+      <input
+        type="text"
+        placeholder="Task Name"
+        [(ngModel)]="taskName"
+        class="form-control"
+      />
+    </div>
+    <div class="col-2">
+      <select [(ngModel)]="selectedDifficulty" class="form-select">
+        <option>Select</option>
+        <option
+          *ngFor="let difficulty of difficultyLevels"
+          [ngValue]="difficulty"
+        >
+          {{ difficulty }}
+        </option>
+      </select>
+    </div>
+    <div class="col-1">
+      <input
+        (click)="add()"
+        type="button"
+        value="Add"
+        class="btn btn-primary"
+      />
+    </div>
+  </div>
+
+  <div class="col-3 border border-primary border-2 taskDiv">
+    <i class="bi bi-list-task"></i>To-do
+    <hr />
+    <label *ngIf="TODOs.length == 0" class="p-10">List is empty</label>
+    <div class="p-10">
+      <app-task
+        *ngFor="let todo of TODOs"
+        [task]="todo"
+        [taskType]="todoType"
+        (deleteRequest)="delete($event, todoType)"
+        (moveForwardRequest)="moveForward($event, todoType)"
+      ></app-task>
+    </div>
+  </div>
+
+  <div class="col-3 border border-info border-2 taskDiv">
+    <i class="bi bi-list-ul"></i>In Progress
+    <hr />
+    <label *ngIf="InPogresses.length == 0" class="p-10">List is empty</label>
+    <div class="p-10">
+      <app-task
+        *ngFor="let inPogress of InPogresses"
+        [task]="inPogress"
+        [taskType]="inProgressType"
+        (moveBackRequest)="moveBack($event, inProgressType)"
+        (moveForwardRequest)="moveForward($event, inProgressType)"
+      ></app-task>
+    </div>
+  </div>
+
+  <div class="col-3 border border-success border-2 taskDiv">
+    <i class="bi bi-list-check"></i>Done
+    <hr />
+    <label *ngIf="Dones.length == 0" class="p-10">List is empty</label>
+    <div class="p-10">
+      <app-task
+        *ngFor="let done of Dones"
+        [task]="done"
+        [taskType]="doneType"
+        (moveBackRequest)="moveBack($event, doneType)"
+      ></app-task>
+    </div>
+  </div>
+</div>
